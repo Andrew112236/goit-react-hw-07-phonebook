@@ -1,21 +1,18 @@
 import React from 'react';
 import styles from './ContactList.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectFilter, selectContacts } from '../../Redux/selectors';
-import { deleteContact } from 'Redux/operations';
 import { Notify } from 'notiflix';
+import { deleteContact } from 'Redux/operations';
 
 export function ContactList() {
+  const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
-  const dispatch = useDispatch();
 
   console.log(contacts);
 
   const filteredContacts = contacts?.filter(contact => {
-    if (!filter) {
-      return true;
-    }
     if (typeof contact.name === 'string') {
       return contact.name.toLowerCase().trim().includes(filter.toLowerCase());
     } else {
@@ -23,16 +20,16 @@ export function ContactList() {
     }
   });
 
-  const handleDelete = id => {
-    dispatch(deleteContact(id));
-  };
-
   if (!filteredContacts?.length && filter.toLowerCase()) {
     Notify.warning('No contacts matching your request', {
       position: 'center-center',
     });
   }
   console.log(filteredContacts);
+
+  const handleDelete = contactId => {
+    dispatch(deleteContact(contactId));
+  };
 
   return (
     <ul>
@@ -43,8 +40,8 @@ export function ContactList() {
           </p>
           <button
             className={styles.button}
-            onClick={() => handleDelete(id)}
             type="button"
+            onClick={() => handleDelete(id)}
           >
             Delete
           </button>
