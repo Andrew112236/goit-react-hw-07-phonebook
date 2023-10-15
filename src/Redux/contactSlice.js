@@ -11,6 +11,16 @@ const contactInitialState = {
   filter: '',
 };
 
+const handlePending = state => {
+  state.isLoading = true;
+  state.error = null;
+};
+
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
+
 const contactSlice = createSlice({
   name: 'phoneBookMark',
   initialState: contactInitialState,
@@ -18,6 +28,7 @@ const contactSlice = createSlice({
     addContact: {
       reducer(state, action) {
         state.items.push(action.payload);
+        state.contacts.isLoading = false;
       },
       prepare(name, number) {
         const contact = {
@@ -36,6 +47,8 @@ const contactSlice = createSlice({
         state.items = state.items.filter(
           contact => contact.id !== action.payload
         );
+        state.contacts.isLoading = false;
+        state.contacts.error = null;
       },
       prepare(contactId) {
         return {
@@ -47,6 +60,8 @@ const contactSlice = createSlice({
       state.filter = action.payload;
     },
   },
+
+  extraReducers: {},
 });
 
 export const { addContact, deleteContact, filterContact } =
