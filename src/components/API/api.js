@@ -9,13 +9,17 @@ const api = axios.create({
 const resources = resource => {
   return {
     getAll: () => api.get(`/${resource}`),
+
     get: id => api.get(`/${resource}/${id}`),
+
     create: newContact => api.post(`/${resource}`, newContact),
+
     update: (id, data) => api.put(`/${resource}/${id}`, data),
+
     delete: id => api.delete(`/${resource}/${id}`),
   };
 };
 
-const contacts_Api = resources('contacts');
+const contactsApi = resources('contacts');
 
-export default contacts_Api;
+export default contactsApi;

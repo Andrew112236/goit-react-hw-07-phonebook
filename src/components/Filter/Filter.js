@@ -2,27 +2,29 @@ import React from 'react';
 import styles from './Filter.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../Redux/Filter';
-import { getFilter } from '../../Redux/contactSlice';
+import { selectFilter } from '../../Redux/selectors';
 
-export function Filter() {
-  const filter = useSelector(getFilter);
+function Filter() {
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
-  const onChange = e => {
-    const inputValue = e.target.value;
-    if (typeof inputValue === 'string') {
-      dispatch(setFilter(inputValue));
-    } else {
-      console.error('Input value is not a string:', inputValue);
-    }
+  const handleFilterChange = event => {
+    dispatch(setFilter(event.target.value));
   };
 
   return (
     <div>
       <label className={styles.label}>
         Filter contacts by name:
-        <input type="text" name="filter" value={filter} onChange={onChange} />
+        <input
+          type="text"
+          name="filter"
+          value={filter}
+          onChange={handleFilterChange}
+        />
       </label>
     </div>
   );
 }
+
+export default Filter;
