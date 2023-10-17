@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styles from '../../components/ContactForm/ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from '../../Redux/selectors';
-import { addContact } from '../../Redux/operations';
+import { addContact } from 'Redux/contactSlice';
+import { getContacts } from 'Redux/selectors';
 
 export function ContactForm() {
-  const contacts = useSelector(selectContacts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -24,7 +24,7 @@ export function ContactForm() {
       }
     }
 
-    dispatch(addContact({ name, number }));
+    dispatch(addContact(name, number));
 
     setName('');
     setNumber('');
