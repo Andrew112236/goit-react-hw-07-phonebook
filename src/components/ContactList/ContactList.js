@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from '../../Redux/contactSlice';
+import { deleteContact } from '../../Redux/operations';
 import { Notify } from 'notiflix';
 import { getContacts } from '../../Redux/selectors';
 
