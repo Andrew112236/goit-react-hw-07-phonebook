@@ -21,9 +21,13 @@ export function ContactList() {
   });
 
   if (!filteredContacts?.length && filter.toLowerCase()) {
-    Notify.warning('No contacts matching your request', {
-      position: 'center-center',
-    });
+    Notify.warning(
+      'No contacts matching your request',
+      { delay: 2000 },
+      {
+        position: 'center-center',
+      }
+    );
   }
   console.log(filteredContacts);
 
